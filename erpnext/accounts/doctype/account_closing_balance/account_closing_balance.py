@@ -64,7 +64,8 @@ def make_closing_entries(closing_entries, voucher_name, company, closing_date):
 		set_amount_in_reporting_currency(cle, company, closing_date)
 		cle.flags.ignore_permissions = True
 		cle.flags.ignore_links = True
-		cle.submit()
+		cle.save()
+		frappe.db.set_value("Account Closing Balance", cle.name, "docstatus", 1, update_modified=False)
 
 
 def aggregate_with_last_account_closing_balance(entries, accounting_dimensions):

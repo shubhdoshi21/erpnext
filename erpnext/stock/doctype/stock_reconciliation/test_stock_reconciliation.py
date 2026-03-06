@@ -1228,7 +1228,8 @@ class TestStockReconciliation(IntegrationTestCase, StockTestMixin):
 			doc.flags.ignore_mandatory = True
 			doc.flags.ignore_links = True
 			doc.flags.ignore_validate = True
-			doc.submit()
+			doc.save()
+			frappe.db.set_value("Stock Ledger Entry", doc.name, "docstatus", 1, update_modified=False)
 			doc.reload()
 
 		frappe.flags.ignore_serial_batch_bundle_validation = False

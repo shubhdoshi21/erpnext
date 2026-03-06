@@ -429,7 +429,8 @@ def make_entry(args, adv_adj, update_outstanding, from_repost=False):
 	gle.flags.adv_adj = adv_adj
 	gle.flags.update_outstanding = update_outstanding or "Yes"
 	gle.flags.notify_update = False
-	gle.submit()
+	gle.save()
+	frappe.db.set_value("GL Entry", gle.name, "docstatus", 1, update_modified=False)
 
 	if (
 		not from_repost
